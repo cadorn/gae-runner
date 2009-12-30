@@ -1,0 +1,12 @@
+{
+    "name": "gae-runner",
+    "dependencies": [
+        "narwhal"
+    ],
+    "using": {
+        "devtools": {
+            "catalog": "file://./catalog.json",
+            "name": "devtools"
+        }
+    }
+}
