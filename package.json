@@ -1,12 +1,14 @@
 {
     "name": "gae-runner",
-    "dependencies": [
-        "narwhal"
-    ],
+    "dependencies": [],
     "using": {
         "devtools": {
-            "catalog": "file://./catalog.json",
+            "catalog": "http://github.com/cadorn/gae-runner/raw/master/catalog.json",
             "name": "devtools"
+        },
+        "test-app": {
+            "catalog": "http://github.com/cadorn/gae-runner/raw/master/catalog.json",
+            "name": "test-app"
         }
     }
 }

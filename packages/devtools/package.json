@@ -1,3 +1,20 @@
 {
-    "name": "devtools"
+    "name": "devtools",
+    "build": {
+        "using": {
+            "jack": {
+                "catalog": "http://github.com/cadorn/narwhal/raw/experimental/catalogs/default.catalog.json",
+                "name": "jack"
+            },
+            "jack-servlet": {
+                "location": "http://github.com/cadorn/jack-servlet/zipball/master/"
+            },
+            "appengine": {
+                "location": "http://github.com/cadorn/appengine/zipball/master/"
+            },
+            "appengine-sdk": {
+                "location": "http://googleappengine.googlecode.com/files/appengine-java-sdk-1.2.2.zip"
+            }
+        }
+    }
 }

@@ -1,0 +1,20 @@
+{
+    "name": "test-app",
+    "build": {
+        "defaultTarget": "dev",
+        "using": {
+            "devtools": {
+                "catalog": "http://github.com/cadorn/gae-runner/raw/master/catalog.json",
+                "name": "devtools"
+            }
+        },
+        "targets": {
+            "dev": "devtools:build/dev",
+            "dist": "devtools:build/dist",
+        }
+    },
+    "appengine": {
+        "name": "cadorn-test",
+        "email": "christoph@christophdorn.com"
+    }
+}

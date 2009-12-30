@@ -1,9 +1,14 @@
 {
     "schema": "1.1",
+    "location": "http://github.com/cadorn/gae-runner/raw/master/catalog.json",
     "packages": {
         "devtools": {
-            "location": "file://./",
+            "location": "http://github.com/cadorn/gae-runner/zipball/master/",
             "path": "packages/devtools"
+        },
+        "test-app": {
+            "location": "file://./",
+            "path": "packages/test-app"
         }
     }
 }
