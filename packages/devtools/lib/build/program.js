@@ -124,7 +124,7 @@ Program.prototype.build = function(args) {
 
 Program.prototype.dist = function() {
     
-//    this.build();
+    this.build();
     
     var sea = TUSK.getActive().getSea();
     
@@ -132,7 +132,16 @@ Program.prototype.dist = function() {
     var descriptor = this.programPackage.getManifest().manifest;
     var appengineSdkPath = sea.getPackage(module.using["appengine-sdk"]).getPath();
 
-    var command = "sh " + appengineSdkPath.join("bin", "appcfg.sh") +" --email=" + descriptor.appengine.email + " update " + buildPath.join("war");
+    var command = [
+        "export APPENGINE_JAVA_SDK=" + appengineSdkPath,
+        "cd " + buildPath,
+        "ant compile"
+    ].join("; ");
+    
+    STREAM.print("\0cyan(" + command + "\0)");
+    OS.system(command);
+
+    command = "sh " + appengineSdkPath.join("bin", "appcfg.sh") +" --email=" + descriptor.appengine.email + " update " + buildPath.join("war");
     STREAM.print("\0cyan(" + command + "\0)");
     OS.system(command);
 

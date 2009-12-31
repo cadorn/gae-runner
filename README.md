@@ -10,11 +10,11 @@ Instructions
 
 See [test-app](http://github.com/cadorn/gae-runner/tree/master/packages/test-app/) for example app. To launch use:
 
-    gae launch --package test-app --build
+    gae launch --package test-app --build --dev
     
 **NOTE:** *You must be using Christoph Dorn's **experimental** narwhal branch for extra tusk functionality.*
 
-To deploy launch the app locally once, then use:
+To deploy use:
 
     tusk package --package test-app build dist
 
