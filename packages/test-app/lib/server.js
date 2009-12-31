@@ -27,7 +27,6 @@ exports.app = function(env) {
         "fc.group.end": true
     });
 
-
     var body = "Hello World";
 
     return {
@@ -36,7 +35,7 @@ exports.app = function(env) {
             "Content-Type": "text/html",
             "Content-Length": String(body.length)
         },
-        body:[
+        body: [
             body
         ]
     };
