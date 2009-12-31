@@ -1,5 +1,6 @@
 {
     "name": "test-app",
+    "type": "using",
     "build": {
         "defaultTarget": "dev",
         "using": {
@@ -9,8 +10,14 @@
             }
         },
         "targets": {
-            "dev": "devtools:build/dev",
-            "dist": "devtools:build/dist",
+            "dev": "github.com/cadorn/gae-runner/raw/master/devtools:build/dev",
+            "dist": "github.com/cadorn/gae-runner/raw/master/devtools:build/dist",
+        }
+    },
+    "using": {
+        "fireconsole": {
+            "catalog": "http://github.com/cadorn/fireconsole/raw/master/catalog.json",
+            "name": "lib-js"
         }
     },
     "appengine": {

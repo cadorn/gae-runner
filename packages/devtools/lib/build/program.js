@@ -3,6 +3,7 @@ function dump(obj) { print(require('test/jsdump').jsDump.parse(obj)) };
 
 var UTIL = require("util");
 var FILE = require("file");
+var ARGS = require("args");
 var OS = require("os");
 var STREAM = require('term').stream;
 var TUSK = require("narwhal/tusk/tusk");
@@ -15,8 +16,14 @@ var Program = exports.Program = function (programPackage) {
     this.programPackage = programPackage;
 }
 
-Program.prototype.build = function() {
-    
+Program.prototype.build = function(args) {
+
+    var parser = new ARGS.Parser();
+    parser.option('--dev')
+        .bool();
+    var options = parser.parse(args);
+
+
     var sea = TUSK.getActive().getSea();
 
     var command;
@@ -58,11 +65,11 @@ Program.prototype.build = function() {
     STREAM.print("\0cyan(" + command + "\0)");
     OS.system(command);
 
-    command = "ln -sf " + this.programPackage.getPath().join("lib") + " " + buildPath.join("war", "WEB-INF", "app");
+    buildPath.join("war", "WEB-INF", "app").mkdirs();
+    command = "ln -sf " + this.programPackage.getPath().join("lib", "jackconfig.js") + " " + buildPath.join("war", "WEB-INF", "app", "jackconfig.js");
     STREAM.print("\0cyan(" + command + "\0)");
     OS.system(command);
 
-    
     // link using packages
     var packages = [
         this.programPackage.getId(),
@@ -90,14 +97,25 @@ Program.prototype.build = function() {
         }
     });
 
+    command = "ln -sf " + this.programPackage.getPath() + " " + buildPath.join("war", "WEB-INF", "using", this.programPackage.getName());
+    STREAM.print("\0cyan(" + command + "\0)");
+    OS.system(command);
+    
+
 
     buildPath.join("war", "WEB-INF", "web.xml").remove();
     var webXmlPath = FILE.Path(module.path).dirname().join("tpl", "etc", "web.xml");
-    webXmlPath.copy(buildPath.join("war", "WEB-INF", "web.xml"));
+    var data = webXmlPath.read();
+    if(options.dev) {
+        data = data.replace(/%%__environment__%%/g, "development");
+    } else {
+        data = data.replace(/%%__environment__%%/g, "none");
+    }
+    buildPath.join("war", "WEB-INF", "web.xml").write(data);
   
   
     var appengineWebXmlPath = FILE.Path(module.path).dirname().join("tpl", "etc", "appengine-web.xml");
-    var data = appengineWebXmlPath.read();
+    data = appengineWebXmlPath.read();
     var descriptor = this.programPackage.getManifest().manifest;
     data = data.replace(/%%appengine.name%%/g, descriptor.appengine.name);
     buildPath.join("war", "WEB-INF", "appengine-web.xml").write(data);

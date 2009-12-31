@@ -30,11 +30,16 @@ command = parser.command('launch', function(options) {
         print("error: package not found in sea");
         return;
     }
-    
+
+    if(options.dev && !options.build) {
+        print("error: you can only use --dev together with --build");
+        return;
+    }
+
     var buildDir = sea.getPath().join("build", packageName);
     if(!buildDir.exists() || options.build) {
 
-        OS.system("tusk package --package " + packageName + " build");
+        OS.system("tusk package --package " + packageName + " build dev" + ((options.dev)?" --dev":""));
     }
 
 
@@ -60,6 +65,7 @@ command = parser.command('launch', function(options) {
 command.help('Launch a package');
 command.option('--package').set().help("The package to launch");
 command.option('--build').bool().help("Force a build/rebuild");
+command.option('--dev').bool().help("Build in dev mode");
 command.helpful();
 
 

@@ -1,7 +1,12 @@
 
-var FILE = require("file");
-
 exports.app = function(env)
-{    
-    return require("jack/reloader").Reloader(new FILE.Path(module.path).dirname().join("server").valueOf(), "app")(env);
+{
+    return require("server", "test-app").app(env);
+}
+
+exports.development = function(app)
+{
+    return function(env) {
+        return require("jack/reloader").Reloader(module.id, "app")(env);
+    };
 }

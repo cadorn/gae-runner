@@ -7,7 +7,7 @@
             "path": "packages/devtools"
         },
         "test-app": {
-            "location": "file://./",
+            "location": "http://github.com/cadorn/gae-runner/zipball/master/",
             "path": "packages/test-app"
         }
     }

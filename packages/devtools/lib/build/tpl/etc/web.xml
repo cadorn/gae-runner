@@ -16,6 +16,14 @@
         <param-name>app</param-name>
         <param-value>app</param-value>
     </init-param>
+    <init-param>
+        <param-name>wildfire</param-name>
+        <param-value>1</param-value>
+    </init-param>
+    <init-param>
+        <param-name>environment</param-name>
+        <param-value>%%__environment__%%</param-value>
+    </init-param>
   </servlet>
   
   <servlet-mapping>
