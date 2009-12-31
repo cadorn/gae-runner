@@ -46,7 +46,6 @@ command = parser.command('launch', function(options) {
         includeBuildDependencies: true
     });    
 
-
     var appengineSdkPath = sea.getPackage(PACKAGES.usingCatalog["github.com/cadorn/gae-runner/raw/master/devtools"].packages["appengine-sdk"]).getPath();
     var command = [
         "export APPENGINE_JAVA_SDK=" + appengineSdkPath,

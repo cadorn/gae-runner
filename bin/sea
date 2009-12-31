@@ -34,8 +34,10 @@ if [ "$#" -lt 1 ]; then
     echo PATH="$PATH" >&2
     echo SEA="$SEA" >&2
     echo SEALVL="$SEALVL" >&2
-    export PS1="\e[00;35mTUSK[\e[00;33mgae-runner\e[00;35m]:\e[m "
-    cd $PACKAGE_HOME
+export PS1="\e[00;35mTUSK[\e[00;33mgae-runner\e[00;35m]:\e[m "
+echo -ne "\e]1;TUSK[gae-runner]\a"
+echo -ne "\e]2;TUSK[gae-runner] @ /pinf/packages-birth/PINF/OpenSource/org.cadorn.github/packages/gae-runner\a"
+cd $PACKAGE_HOME
     "$SHELL" --noprofile --norc
 else
     "$SHELL" --noprofile --norc -c "$(enquote_all "$@")"

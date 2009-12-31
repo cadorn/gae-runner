@@ -1,11 +1,13 @@
 
 function dump(obj) { print(require('test/jsdump').jsDump.parse(obj)) };
 
+var UTIL = require("util");
 var FILE = require("file");
 var OS = require("os");
 var STREAM = require('term').stream;
 var TUSK = require("narwhal/tusk/tusk");
 var PACKAGES = require("packages");
+var JSON = require("json");
 
 var Program = exports.Program = function (programPackage) {
     if (!(this instanceof exports.Program))
@@ -37,6 +39,7 @@ Program.prototype.build = function() {
     buildPath.join("war", "WEB-INF", "lib", "js.jar").remove();
     
     var narwhalPath = PACKAGES.catalog.narwhal.directory;
+//    command = "git clone git://github.com/cadorn/narwhal.git " + buildPath.join("war", "WEB-INF", "narwhal");
     command = "cp -Rf " + narwhalPath + " " + buildPath.join("war", "WEB-INF", "narwhal");
     STREAM.print("\0cyan(" + command + "\0)");
     OS.system(command);
@@ -58,6 +61,34 @@ Program.prototype.build = function() {
     command = "ln -sf " + this.programPackage.getPath().join("lib") + " " + buildPath.join("war", "WEB-INF", "app");
     STREAM.print("\0cyan(" + command + "\0)");
     OS.system(command);
+
+    
+    // link using packages
+    var packages = [
+        this.programPackage.getId(),
+        "github.com/cadorn/wildfire/zipball/master/packages/lib-js-system"
+    ];
+    var usingPackages = {};
+    UTIL.forEach(packages, function(pkgId) {
+        if(sea.hasPackage(pkgId)) {
+            var usingPkg = sea.getPackage(pkgId);
+            usingPackages[pkgId] = usingPkg.getPath().valueOf();
+            usingPkg.forEachDependency(function(pkg) {
+                usingPackages[pkg.getId()] = pkg.getPath().valueOf();
+            }, "package", true);
+        }
+    });
+    UTIL.every(usingPackages, function(item) {
+        var pkgId = item[0];
+        var file = sea.getPath().join("using", pkgId);
+        if(file.exists()) {
+            buildPath.join("war", "WEB-INF", "using", pkgId).dirname().mkdirs();
+            
+            command = "ln -sf " + file + " " + buildPath.join("war", "WEB-INF", "using", pkgId);
+            STREAM.print("\0cyan(" + command + "\0)");
+            OS.system(command);
+        }
+    });
 
 
     buildPath.join("war", "WEB-INF", "web.xml").remove();
