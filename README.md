@@ -18,6 +18,10 @@ To deploy use:
 
     tusk package --package test-app build dist
 
+To install devtools into sea use:
+
+    tusk package install --alias gae-devtools http://github.com/cadorn/gae-runner/raw/master/catalog.json devtools
+
 
 License
 =======

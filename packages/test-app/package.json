@@ -18,7 +18,10 @@
         "fireconsole": {
             "catalog": "http://github.com/cadorn/fireconsole/raw/master/catalog.json",
             "name": "lib-js"
-        }
+        },
+        "appengine": {
+            "location": "http://github.com/cadorn/appengine/zipball/master/"
+        },
     },
     "appengine": {
         "name": "cadorn-test",
